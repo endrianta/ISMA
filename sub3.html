@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Bisnis Proses dan Layanan PT. ISMA</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <link href="assets/img/logo.png" rel="icon" />
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Amatic+SC:wght@400;700&family=Inter:wght@400;700&display=swap" rel="stylesheet" />
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+
+    <link href="assets/css/main.css" rel="stylesheet" />
+
+    <style>
+      /* Header */
+      #header.header {
+        transition: background-color 0.2s ease;
+      }
+      .nav-link.active {
+        color: dodgerblue !important;
+      }
+      /* Section generic spacing */
+      section {
+        padding: 30px 0;
+      }
+      /* Footer */
+      #footer .bi {
+        line-height: 1;
+      }
+
+      /* Aspek Hukum Styles */
+      .hover-zoom {
+        transition: transform 0.3s ease;
+      }
+      .hover-zoom:hover {
+        transform: scale(1.05);
+      }
+      .hover-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .hover-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      }
+      .maritime-img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        border: 2px solid #e0e0e0;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+        transition: transform 0.6s ease, box-shadow 0.6s ease, opacity 0.6s ease;
+        opacity: 0.9;
+      }
+      .maritime-img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        opacity: 1;
+      }
+      .fade-in {
+        animation: fadeInUp 1.2s ease-in-out forwards;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .law-items {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 35px 50px;
+        position: relative;
+      }
+      .law-items li {
+        background: #f9f9f9;
+        border-left: 6px solid #007bff;
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        font-size: 0.95rem;
+        transition: all 0.4s ease;
+      }
+      .law-items li:hover {
+        transform: scale(1.05);
+        background: linear-gradient(135deg, #eef6ff, #ffffff);
+      }
+
+      /* Business Process Styles */
+      .process-timeline {
+        position: relative;
+        display: grid;
+        gap: 2rem;
+      }
+      .grid-4 {
+        grid-template-columns: repeat(4, 1fr);
+      }
+      .grid-5 {
+        grid-template-columns: repeat(5, 1fr);
+      }
+      .process-card {
+        background: #fff;
+        border: 1px solid #eaeaea;
+        border-radius: 20px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .process-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
+      }
+      .step-number {
+        width: 50px;
+        height: 50px;
+        background: #0d6efd;
+        color: #fff;
+        font-weight: bold;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 10px auto;
+        font-size: 1.2rem;
+      }
+      .icon-wrap i {
+        transition: transform 0.3s ease;
+      }
+      .process-card:hover .icon-wrap i {
+        transform: scale(1.2);
+      }
+      .process-timeline::before {
+        content: "";
+        position: absolute;
+        top: 35px;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #0d6efd, #20c997, #ffc107, #dc3545, #0dcaf0, #6c757d, #198754);
+        z-index: -1;
+      }
+
+      /* Service Card Styles */
+      .service-card {
+        transition: all 0.3s ease;
+        border: 1px solid #eaeaea;
+      }
+      .service-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 10px 22px rgba(0, 0, 0, 0.15);
+      }
+      .service-img {
+        height: 220px;
+        width: 100%;
+        object-fit: cover;
+      }
+    </style>
+  </head>
+
+  <body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="70" tabindex="0">
+    <header id="header" class="header fixed-top bg-white shadow-sm">
+      <div class="container d-flex align-items-center justify-content-between py-2">
+        <a href="index.html" class="d-inline-flex align-items-center">
+          <img src="assets/img/logoisma.png" alt="Logo" class="img-fluid" style="height: 60px" />
+        </a>
+
+        <nav class="navbar navbar-expand-md">
+          <ul class="navbar-nav ms-auto fw-bold">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" style="margin-right: 180px" onclick="window.location='index.html';">
+                Home
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="sub1.html">Aspek Hukum</a></li>
+                <li><a class="dropdown-item" href="sub2.html">Susunan Pemegang Saham dan Organisasi</a></li>
+                <li><a class="dropdown-item" href="sub3.html">Bisnis Proses dan Layanan</a></li>
+                <li><a class="dropdown-item" href="sub4.html">Sebaran Tenaga Kerja</a></li>
+                <li><a class="dropdown-item" href="sub5.html">Mitra</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="position-relative text-white">
+        <img src="assets/img/kapal (1).jpg" class="img-fluid w-100" style="object-fit: cover; max-height: 400px" alt="Kapal Maritim" />
+        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0, 60, 120, 0.55); max-height: 430px"></div>
+        <div class="position-absolute top-50 start-50 translate-middle text-center">
+          <h1 class="fw-bold display-5">Bisnis Proses dan Layanan</h1>
+          <p class="lead">PT. Intan Sejahtera Utama (ISMA)</p>
+        </div>
+      </section>
+
+      <section class="container my-5">
+        <div class="card border-0 shadow-lg p-4" data-aos="fade-up">
+          <h3 class="text-center fw-bold mb-4 text-primary">Sertifikasi & Standar</h3>
+          <div class="row text-center g-4">
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+              <div class="p-3 bg-white rounded shadow-sm h-100 hover-zoom">
+                <img src="assets/img/iso.png" alt="ISO" class="img-fluid" style="max-height: 120px" />
+                <p class="mt-2 fw-semibold">ISO 9001:2015</p>
+              </div>
+            </div>
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+              <div class="p-3 bg-white rounded shadow-sm h-100 hover-zoom">
+                <img src="assets/img/ukas.png" alt="UKAS" class="img-fluid" style="max-height: 120px" />
+                <p class="mt-2 fw-semibold">UKAS Management Systems</p>
+              </div>
+            </div>
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
+              <div class="p-3 bg-white rounded shadow-sm h-100 hover-zoom">
+                <img src="assets/img/qr.png" alt="QR Code" class="img-fluid" style="max-height: 120px" />
+                <p class="mt-2 fw-semibold">Registrasi QR</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="container my-5">
+        <div class="text-center mb-5">
+          <h3 class="fw-bold text-primary">Business Process</h3>
+          <p class="text-muted">
+            Alur proses bisnis PT. Intan Sejahtera Utama (ISMA) dimulai dari kontrak kerja, perekrutan awak kapal, pengendalian mutu, hingga serah terima pekerjaan kepada pelanggan. Berikut tahapan lengkap yang dijalankan perusahaan untuk menjamin kualitas layanan dan kepuasan pelanggan.
+          </p>
+        </div>
+
+        <div class="process-timeline grid-4">
+          <div class="process-card" data-aos="fade-up">
+            <div class="step-number">01</div>
+            <div class="icon-wrap mb-3"><i class="fas fa-file-contract fa-2x text-primary"></i></div>
+            <h5 class="fw-bold text-primary">CBA / Contract</h5>
+            <p class="text-muted small mb-0">
+              Tahap awal dimulai dari perolehan pekerjaan dengan kontrak kerjasama (CBA). Perusahaan melakukan negosiasi serta menetapkan kesepakatan formal mengenai ruang lingkup, biaya, dan tanggung jawab sebelum masuk ke tahap tender dan perencanaan.
+            </p>
+          </div>
+
+          <div class="process-card" data-aos="fade-up" data-aos-delay="100">
+            <div class="step-number">02</div>
+            <div class="icon-wrap mb-3"><i class="fas fa-gavel fa-2x text-success"></i></div>
+            <h5 class="fw-bold text-success">Tender</h5>
+            <p class="text-muted small mb-0">
+              Proses pemilihan penyedia jasa dilakukan secara terbuka dan transparan melalui tender. Perusahaan yang memenuhi syarat ditetapkan sebagai pemenang tender dan mendapatkan hak untuk melaksanakan pekerjaan sesuai kontrak.
+            </p>
+          </div>
+
+          <div class="process-card" data-aos="fade-up" data-aos-delay="200">
+            <div class="step-number">03</div>
+            <div class="icon-wrap mb-3"><i class="fas fa-calendar-check fa-2x text-warning"></i></div>
+            <h5 class="fw-bold text-warning">Plan</h5>
+            <p class="text-muted small mb-0">
+              Setelah kontrak diperoleh, tim melakukan perencanaan pekerjaan. Tahapan ini meliputi penyusunan strategi pelaksanaan, penjadwalan, alokasi sumber daya manusia dan peralatan, serta pemetaan risiko untuk memastikan operasional berjalan efektif.
+            </p>
+          </div>
+
+          <div class="process-card" data-aos="fade-up" data-aos-delay="300">
+            <div class="step-number">04</div>
+            <div class="icon-wrap mb-3"><i class="fas fa-user-plus fa-2x text-danger"></i></div>
+            <h5 class="fw-bold text-danger">Recruitment & Placement (RPM)</h5>
+            <p class="text-muted small mb-0">
+              Perekrutan awak kapal dilakukan secara ketat melalui tahapan rekrutmen, mutasi, promosi, maupun demosi sesuai kebutuhan. Proses ini mencakup <b>sign on/off, transfer, hingga penempatan personel</b> yang sesuai dengan kompetensi agar mendukung kinerja optimal.
+            </p>
+          </div>
+        </div>
+
+        <div class="process-timeline grid-5 mt-5">
+          <div class="process-card" data-aos="fade-up" data-aos-delay="400">
+            <div class="step-number">05</div>
+            <div class="icon-wrap mb-3"><i class="fas fa-check-circle fa-2x text-info"></i></div>
+            <h5 class="fw-bold text-info">Quality Control</h5>
+            <p class="text-muted small mb-0">
+              Untuk memastikan kesiapan kerja, dilakukan pemeriksaan <b>fit to work</b>, pelatihan dan drill, pengecekan higienitas, serta audit lingkungan kerja. Tahap ini juga mencakup management walkthrough untuk menjamin bahwa seluruh awak kapal mematuhi standar keselamatan dan prosedur kerja.
+            </p>
+          </div>
+
+          <div class="process-card" data-aos="fade-up" data-aos-delay="500">
+            <div class="step-number">06</div>
+            <div class="icon-wrap mb-3"><i class="fas fa-certificate fa-2x text-secondary"></i></div>
+            <h5 class="fw-bold text-secondary">Certification</h5>
+            <p class="text-muted small mb-0">
+              Awak kapal wajib memiliki sertifikat yang sah dan berlaku. Pada tahap ini dilakukan pembaruan sertifikat, pelatihan keselamatan, serta revalidasi kompetensi sesuai standar internasional untuk memastikan kelayakan bekerja di laut.
+            </p>
+          </div>
+
+          <div class="process-card" data-aos="fade-up" data-aos-delay="600">
+            <div class="step-number">07</div>
+            <div class="icon-wrap mb-3"><i class="fas fa-ship fa-2x text-dark"></i></div>
+            <h5 class="fw-bold text-dark">Repatriation</h5>
+            <p class="text-muted small mb-0">
+              Pemulangan awak kapal dilakukan dengan dua mekanisme: <b>normal basis</b> setelah masa kerja selesai, atau <b>emergency response</b> ketika terjadi kondisi darurat. Proses ini menjamin hak-hak awak kapal tetap terlindungi.
+            </p>
+          </div>
+
+          <div class="process-card" data-aos="fade-up" data-aos-delay="700">
+            <div class="step-number">08</div>
+            <div class="icon-wrap mb-3"><i class="fas fa-users fa-2x text-primary"></i></div>
+            <h5 class="fw-bold text-primary">Process (Execution)</h5>
+            <p class="text-muted small mb-0">
+              Pelaksanaan pekerjaan dilakukan sesuai perencanaan dan standar regulasi maritim. Termasuk di dalamnya seleksi awak kapal, registrasi pada DirJenHubla, serta operasional seperti <b>PKL awak kapal, Sijil On/Off, dan MCU approval</b> dari pihak berwenang.
+            </p>
+          </div>
+
+          <div class="process-card" data-aos="fade-up" data-aos-delay="800">
+            <div class="step-number">09</div>
+            <div class="icon-wrap mb-3"><i class="fas fa-handshake fa-2x text-success"></i></div>
+            <h5 class="fw-bold text-success">Customer / Handover</h5>
+            <p class="text-muted small mb-0">
+              Tahap akhir adalah serah terima hasil kerja kepada pelanggan. Penyerahan dilakukan secara formal untuk memastikan pelanggan menerima layanan sesuai kontrak, serta menjadi evaluasi bagi peningkatan kualitas perusahaan ke depan.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <section class="container my-5">
+        <div class="text-center mb-5">
+          <h3 class="fw-bold text-primary">Service Provide</h3>
+          <p class="text-muted">
+            Sebagai pendukung dalam dunia Kemaritiman dan Fasilitas Kepelabuhanan, PT. Intan Sejahtera Utama berkomitmen untuk mensupport Indonesia Maritime Gateway.
+          </p>
+        </div>
+
+        <div class="row g-4">
+          <div class="col-md-6" data-aos="zoom-in">
+            <div class="service-card shadow-sm rounded-4 overflow-hidden h-100">
+              <img src="assets/img/awak kapal.jpg" class="img-fluid service-img" alt="Tenaga Awak Kapal" />
+              <div class="p-4 bg-light">
+                <h5 class="fw-bold text-primary">Tenaga Awak Kapal</h5>
+                <p class="text-muted small mb-0">
+                  <strong>PT Intan Sejahtera Utama</strong> menyediakan jasa tenaga awak kapal yang berkompeten dengan latar belakang di bidang kelautan. Awak kapal kami dilatih untuk memberikan kenyamanan, keselamatan, serta profesionalisme tinggi dalam beroperasi.
+                </p>
+              </div>
+            </div>
+          </div>
+
+          <div class="col-md-6" data-aos="zoom-in" data-aos-delay="150">
+            <div class="service-card shadow-sm rounded-4 overflow-hidden h-100">
+              <img src="assets/img/maritim pilot.jpg" class="img-fluid service-img" alt="Maritime Pilot" />
+              <div class="p-4 bg-white">
+                <h5 class="fw-bold text-success">Maritime Pilot</h5>
+                <p class="text-muted small mb-0">
+                  <strong>PT Intan Sejahtera Utama</strong> juga menyediakan jasa <em>Maritime Pilot Expert (Pandu)</em> yang berkompeten dengan sertifikasi resmi. Para maritime pilot kami siap membantu klien dalam mengarahkan kapal dengan aman dan efisien ketika masuk ataupun keluar pelabuhan.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="footer" class="footer bg-dark pt-5 pb-3" style="background-image: url('assets/img/bg3.png'); background-size: cover; background-position: center;">
+      <div class="container">
+        <div class="row gy-4 justify-content-center text-center">
+          <div class="col-md-4 d-flex flex-column align-items-center">
+            <i class="bi bi-geo-alt fs-3 mb-2"></i>
+            <div>
+              <h5 class="fw-bold">Alamat</h5>
+              <p class="mb-0">
+                Makassar, <br />Jl. H. I. A. Saleh Dg. Tompo, Losari, <br />Kec. Ujung Pandang, Kota Makassar, <br />Sulawesi Selatan 90113
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4 d-flex flex-column align-items-center">
+            <i class="bi bi-telephone fs-3 mb-2"></i>
+            <div>
+              <h5 class="fw-bold">Hubungi</h5>
+              <p class="mb-0">
+                <strong>Email:</strong> <br />intansejahterautama@gmail.com <br />
+                <strong>Whatsapp:</strong> <br />085256219031
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4 d-flex flex-column align-items-center">
+            <i class="bi bi-clock fs-3 mb-2"></i>
+            <div>
+              <h5 class="fw-bold">Tersedia</h5>
+              <p class="mb-0">
+                <strong>Senin - Jumat:</strong> <br />08.00 - 17.00 WITA <br />
+                <strong>Sabtu - Minggu:</strong> <br />Tutup
+              </p>
+            </div>
+          </div>
+        </div>
+        <hr class="border-secondary my-4" />
+        <div class="text-center small text-white">© Hak Cipta <strong>PT. INTAN SEJAHTERA UTAMA</strong>.</div>
+      </div>
+    </footer>
+
+    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <div id="preloader"></div>
+
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>

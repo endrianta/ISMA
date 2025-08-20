@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+
+    <title>Mitra PT. ISMA</title>
+    <meta content="" name="description" />
+    <meta content="" name="keywords" />
+
+    <link href="assets/img/logo.png" rel="icon" />
+    <link href="assets/img/apple-touch-icon.png" rel="apple-touch-icon" />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&family=Amatic+SC:wght@400;700&family=Inter:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+    />
+
+    <link href="assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet" />
+    <link href="assets/vendor/aos/aos.css" rel="stylesheet" />
+    <link href="assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet" />
+    <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
+
+    <link href="assets/css/main.css" rel="stylesheet" />
+
+    <style>
+      /* Header */
+      #header.header {
+        transition: background-color 0.2s ease;
+      }
+      .nav-link.active {
+        color: dodgerblue !important;
+      }
+      /* Section generic spacing */
+      section {
+        padding: 30px 0;
+      }
+      /* Footer */
+      #footer .bi {
+        line-height: 1;
+      }
+
+      /* Aspek Hukum Styles */
+      .hover-zoom {
+        transition: transform 0.3s ease;
+      }
+      .hover-zoom:hover {
+        transform: scale(1.05);
+      }
+      .hover-card {
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+      }
+      .hover-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+      }
+      .maritime-img {
+        max-width: 100%;
+        height: auto;
+        border-radius: 12px;
+        border: 2px solid #e0e0e0;
+        box-shadow: 0 6px 15px rgba(0, 0, 0, 0.12);
+        transition: transform 0.6s ease, box-shadow 0.6s ease, opacity 0.6s ease;
+        opacity: 0.9;
+      }
+      .maritime-img:hover {
+        transform: scale(1.05);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+        opacity: 1;
+      }
+      .fade-in {
+        animation: fadeInUp 1.2s ease-in-out forwards;
+      }
+      @keyframes fadeInUp {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+      .law-items {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 35px 50px;
+        position: relative;
+      }
+      .law-items li {
+        background: #f9f9f9;
+        border-left: 6px solid #007bff;
+        padding: 15px 20px;
+        border-radius: 10px;
+        box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        font-size: 0.95rem;
+        transition: all 0.4s ease;
+      }
+      .law-items li:hover {
+        transform: scale(1.05);
+        background: linear-gradient(135deg, #eef6ff, #ffffff);
+      }
+    </style>
+  </head>
+
+  <body data-bs-spy="scroll" data-bs-target="#navbar" data-bs-offset="70" tabindex="0">
+    <header id="header" class="header fixed-top bg-white shadow-sm">
+      <div class="container d-flex align-items-center justify-content-between py-2">
+        <a href="index.html" class="d-inline-flex align-items-center">
+          <img src="assets/img/logoisma.png" alt="Logo" class="img-fluid" style="height: 60px" />
+        </a>
+
+        <nav class="navbar navbar-expand-md">
+          <ul class="navbar-nav ms-auto fw-bold">
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" style="margin-right: 180px" onclick="window.location='index.html';">
+                Home
+              </a>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="sub1.html">Aspek Hukum</a></li>
+                <li><a class="dropdown-item" href="sub2.html">Susunan Pemegang Saham dan Organisasi</a></li>
+                <li><a class="dropdown-item" href="sub3.html">Bisnis Proses dan Layanan</a></li>
+                <li><a class="dropdown-item" href="sub4.html">Sebaran Tenaga Kerja</a></li>
+                <li><a class="dropdown-item" href="sub5.html">Mitra</a></li>
+              </ul>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <section class="position-relative text-white">
+        <img src="assets/img/kapal (1).jpg" class="img-fluid w-100" style="object-fit: cover; max-height: 400px" alt="Kapal Maritim" />
+        <div class="position-absolute top-0 start-0 w-100 h-100" style="background: rgba(0, 60, 120, 0.55); max-height: 430px"></div>
+        <div class="position-absolute top-50 start-50 translate-middle text-center">
+          <h1 class="fw-bold display-5">Mitra</h1>
+          <p class="lead">PT. Intan Sejahtera Utama (ISMA)</p>
+        </div>
+      </section>
+
+      <section class="container my-5">
+        <div class="card border-0 shadow-lg p-4" data-aos="fade-up">
+          <h3 class="text-center fw-bold mb-4 text-primary">Sertifikasi & Standar</h3>
+          <div class="row text-center g-4">
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="100">
+              <div class="p-3 bg-white rounded shadow-sm h-100 hover-zoom">
+                <img src="assets/img/iso.png" alt="ISO" class="img-fluid" style="max-height: 120px" />
+                <p class="mt-2 fw-semibold">ISO 9001:2015</p>
+              </div>
+            </div>
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="200">
+              <div class="p-3 bg-white rounded shadow-sm h-100 hover-zoom">
+                <img src="assets/img/ukas.png" alt="UKAS" class="img-fluid" style="max-height: 120px" />
+                <p class="mt-2 fw-semibold">UKAS Management Systems</p>
+              </div>
+            </div>
+            <div class="col-md-4" data-aos="zoom-in" data-aos-delay="300">
+              <div class="p-3 bg-white rounded shadow-sm h-100 hover-zoom">
+                <img src="assets/img/qr.png" alt="QR Code" class="img-fluid" style="max-height: 120px" />
+                <p class="mt-2 fw-semibold">Registrasi QR</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="container my-5">
+        <div class="card border-0 shadow-lg p-4" data-aos="fade-up">
+          <div class="d-flex align-items-center">
+              <div class="flex-grow-1"></div>
+              <h3 class="text-center fw-bold text-primary mb-0" style="margin-left: 150px;">Mitra Kami</h3>
+              <div class="flex-grow-1 text-end">
+                  <img src="assets/img/logoisma.png" alt="Logo ISMA" class="img-fluid" style="height: 60px; object-fit: contain;">
+              </div>
+          </div>
+
+          <h5 class="fw-semibold mb-3 text-secondary">Pelindo Group</h5>
+          <div class="row text-center g-4 mb-4">
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/pelindo1.png" class="img-fluid" alt="Pelindo 1" />
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/pelindo2.png" class="img-fluid" alt="Pelindo 2" />
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/pelindo3.png" class="img-fluid" alt="Pelindo 3" />
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/pelindo4.png" class="img-fluid" alt="Pelindo 4" />
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/koperasipelindo.png" class="img-fluid" alt="koperasipelindo" />
+              </div>
+            </div>
+          </div>
+
+          <h5 class="fw-semibold mb-3 text-secondary">Non Pelindo</h5>
+          <div class="row text-center g-4 mb-4">
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/menhub.png" class="img-fluid" alt="Menhub" />
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/gunawisista.png" class="img-fluid" alt="Gunawisista" />
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/barombong.png" class="img-fluid" alt="Barombong"/>
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/koperasi.png" class="img-fluid" alt="Koperasi" />
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/mandiri.png" class="img-fluid" alt="Mandiri" />
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/bni.png" class="img-fluid" alt="BNI" />
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/inhealth.png" class="img-fluid" alt="Inhealth" />
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/bpjs1.png" class="img-fluid" alt="BPJS1" />
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/bpjs2.png" class="img-fluid" alt="BPJS2" />
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/equalita.png" class="img-fluid" alt="Equalita" />
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/smi.png" class="img-fluid" alt="SMI" />
+              </div>
+            </div>
+          </div>
+
+          <h5 class="fw-semibold mb-3 text-secondary">Organisasi / Asosiasi</h5>
+          <div class="row text-center g-4">
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/apindo.png" class="img-fluid" alt="APINDO" />
+              </div>
+            </div>
+            <div class="col-6 col-md-2">
+              <div class="p-3 bg-white rounded shadow-sm hover-zoom">
+                <img src="assets/img/mitra/p3i.png" class="img-fluid" alt="P3I" />
+              </div>
+            </div>
+        </div>
+      </section>
+    </main>
+
+    <footer id="footer" class="footer bg-dark pt-5 pb-3" style="background-image: url('assets/img/bg3.png'); background-size: cover; background-position: center;">
+      <div class="container">
+        <div class="row gy-4 justify-content-center text-center">
+          <div class="col-md-4 d-flex flex-column align-items-center">
+            <i class="bi bi-geo-alt fs-3 mb-2"></i>
+            <div>
+              <h5 class="fw-bold">Alamat</h5>
+              <p class="mb-0">
+                Makassar, <br />Jl. H. I. A. Saleh Dg. Tompo, Losari, <br />Kec. Ujung Pandang, Kota Makassar, <br />Sulawesi Selatan 90113
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4 d-flex flex-column align-items-center">
+            <i class="bi bi-telephone fs-3 mb-2"></i>
+            <div>
+              <h5 class="fw-bold">Hubungi</h5>
+              <p class="mb-0">
+                <strong>Email:</strong> <br />intansejahterautama@gmail.com <br />
+                <strong>Whatsapp:</strong> <br />085256219031
+              </p>
+            </div>
+          </div>
+          <div class="col-md-4 d-flex flex-column align-items-center">
+            <i class="bi bi-clock fs-3 mb-2"></i>
+            <div>
+              <h5 class="fw-bold">Tersedia</h5>
+              <p class="mb-0">
+                <strong>Senin - Jumat:</strong> <br />08.00 - 17.00 WITA <br />
+                <strong>Sabtu - Minggu:</strong> <br />Tutup
+              </p>
+            </div>
+          </div>
+        </div>
+        <hr class="border-secondary my-4" />
+        <div class="text-center small text-white">© Hak Cipta <strong>PT. INTAN SEJAHTERA UTAMA</strong>.</div>
+      </div>
+    </footer>
+
+    <a href="#" class="scroll-top d-flex align-items-center justify-content-center"><i class="bi bi-arrow-up-short"></i></a>
+    <div id="preloader"></div>
+
+    <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="assets/vendor/aos/aos.js"></script>
+    <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
+    <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
+    <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
+
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
