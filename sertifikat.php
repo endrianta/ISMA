@@ -171,27 +171,27 @@ while ($rowFooter = $footerResult->fetch_assoc()) {
                 <div class="card-custom">
                 <div class="row">
                     <?php if(mysqli_num_rows($data) > 0): ?>
-                    <?php while($row = mysqli_fetch_assoc($data)): ?>
+                    <?php while($row = mysqli_fetch_assoc($data)):
+                        $fileName = $row['file_sertifikat'];
+                        $filePath = "assets/img/sertifikat/" . $fileName;
+                        $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+                    ?>
                         <div class="col-md-3 mb-4">
                         <div class="card h-100 shadow-sm">
                             <?php 
-                            $ext = strtolower(pathinfo($row['file_sertifikat'], PATHINFO_EXTENSION));
-                            $filePath = "assets/img/sertifikat/" . htmlspecialchars($row['file_sertifikat']);
-                            
-                            $glightbox_attrs = 'href="'. $filePath .'" class="glightbox" data-gallery="sertifikat-gallery" data-title="'. htmlspecialchars($row['nama_sertifikat']) .' ('. $row['tahun_terbit'] .')"';
-
                             if($ext === 'pdf'): 
-                                // For PDF, specify iframe type
-                                $glightbox_attrs .= ' data-type="iframe"';
+                                $link = "view_pdf.php?file=" . urlencode($fileName);
                             ?>
-                                <a <?= $glightbox_attrs ?>>
+                                <a href="<?= htmlspecialchars($link) ?>" target="_blank">
                                     <div class="pdf-placeholder">
                                         <i class="bi bi-filetype-pdf" style="font-size: 80px; color: #dc3545;"></i>
                                     </div>
                                 </a>
-                            <?php else: ?>
+                            <?php else: 
+                                $glightbox_attrs = 'href="'. htmlspecialchars($filePath) .'" class="glightbox" data-gallery="sertifikat-gallery" data-title="'. htmlspecialchars($row['nama_sertifikat']) .' ('. $row['tahun_terbit'] .')"';
+                            ?>
                                 <a <?= $glightbox_attrs ?>>
-                                  <img src="<?= $filePath ?>" class="card-img-top" alt="<?= htmlspecialchars($row['nama_sertifikat']) ?>">
+                                  <img src="<?= htmlspecialchars($filePath) ?>" class="card-img-top" alt="<?= htmlspecialchars($row['nama_sertifikat']) ?>">
                                 </a>
                             <?php endif; ?>
                             <div class="card-body text-center">
@@ -280,9 +280,7 @@ while ($rowFooter = $footerResult->fetch_assoc()) {
   <!-- Initialize GLightbox -->
   <script>
     const lightbox = GLightbox({
-      selector: '.glightbox',
-      width: '85vw', // Set width for all lightboxes
-      height: '90vh' // Set height for all lightboxes
+      selector: '.glightbox'
     });
   </script>
 </body>

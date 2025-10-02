@@ -81,11 +81,16 @@ $result = mysqli_query($conn, "SELECT * FROM sertifikat ORDER BY tahun_terbit DE
             <td><?= $row['tahun_terbit'] ?></td>
             <td>
               <?php
-                $ext = strtolower(pathinfo($row['file_sertifikat'], PATHINFO_EXTENSION));
-                $filePath = "../assets/img/sertifikat/" . $row['file_sertifikat'];
-                if(in_array($ext, ['jpg','jpeg','png','gif','webp']) && file_exists($filePath)) {
+                $fileName = $row['file_sertifikat'];
+                $ext = strtolower(pathinfo($fileName, PATHINFO_EXTENSION));
+                $filePath = "../assets/img/sertifikat/" . $fileName;
+
+                if (in_array($ext, ['jpg','jpeg','png','gif','webp']) && file_exists($filePath)) {
                     echo '<img src="'.htmlspecialchars($filePath).'" alt="File Sertifikat" class="preview-img">';
-                } elseif(file_exists($filePath)) {
+                } elseif ($ext === 'pdf' && file_exists($filePath)) {
+                    $link = '../view_pdf.php?file=' . urlencode($fileName);
+                    echo '<a href="'.htmlspecialchars($link).'" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>';
+                } elseif (file_exists($filePath)) {
                     echo '<a href="'.htmlspecialchars($filePath).'" target="_blank" class="btn btn-primary btn-sm">Lihat File</a>';
                 } else {
                     echo '<span style="color:red;">File tidak ditemukan</span>';
