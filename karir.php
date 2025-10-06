@@ -1,6 +1,32 @@
 <?php
-include "admin/config.php"; // koneksi ke DB
-$result = mysqli_query($conn, "SELECT * FROM karir ORDER BY date_posted DESC");
+include "admin/config.php";
+
+// Logika untuk filter dan pencarian
+$where_clauses = ["status = 'Dibuka'"];
+$search_term = '';
+$location_filter = '';
+$type_filter = '';
+
+if (!empty($_GET['search'])) {
+    $search_term = mysqli_real_escape_string($conn, $_GET['search']);
+    $where_clauses[] = "(title LIKE '%$search_term%' OR description LIKE '%$search_term%')";
+}
+if (!empty($_GET['location'])) {
+    $location_filter = mysqli_real_escape_string($conn, $_GET['location']);
+    $where_clauses[] = "location = '$location_filter'";
+}
+if (!empty($_GET['type'])) {
+    $type_filter = mysqli_real_escape_string($conn, $_GET['type']);
+    $where_clauses[] = "job_type = '$type_filter'";
+}
+
+$sql = "SELECT * FROM karir WHERE " . implode(' AND ', $where_clauses) . " ORDER BY date_posted DESC";
+$result = mysqli_query($conn, $sql);
+
+// Ambil data untuk filter dropdown
+$locations = mysqli_query($conn, "SELECT DISTINCT location FROM karir WHERE status = 'Dibuka' ORDER BY location");
+$job_types = mysqli_query($conn, "SELECT DISTINCT job_type FROM karir WHERE status = 'Dibuka' ORDER BY job_type");
+
 ?>
 
 <!DOCTYPE html>
@@ -20,39 +46,10 @@ $result = mysqli_query($conn, "SELECT * FROM karir ORDER BY date_posted DESC");
   <link href="assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet" />
   <link href="assets/css/main.css" rel="stylesheet" />
 
-  <style>
-    body {
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    #main {
-      flex-grow: 1;
-    }
-    .card-img-top {
-      height: 220px;
-      object-fit: cover;
-    }
-    .card {
-      display: flex;
-      flex-direction: column;
-      height: 100%;
-    }
-    .card-body {
-      display: flex;
-      flex-direction: column;
-      flex-grow: 1;
-    }
-    .card-body .btn {
-      margin-top: auto;   /* paksa tombol ke bawah */
-      width: 100%;
-    }
-  </style>
 </head>
 <body>
   <!-- Header -->
-  <header id="header" class="header bg-white shadow-sm" 
-        style="padding-top: 25px; padding-bottom: 80px; position: fixed; top: 0; left: 0; right: 0; z-index: 1030;">
+   <header id="header" class="header bg-white shadow-sm" style="padding-top: 25px; padding-bottom: 80px; position: fixed; top: 0; left: 0; right: 0; z-index: 1030;">
       <div class="container d-flex align-items-center justify-content-between py-2">
         <a href="index.php" class="d-inline-flex align-items-center">
           <img src="assets/img/logoisma.png" alt="Logo" class="img-fluid" style="height: 60px" />
@@ -81,100 +78,106 @@ $result = mysqli_query($conn, "SELECT * FROM karir ORDER BY date_posted DESC");
             <li class="nav-item"><a class="nav-link" href="index.php#structure">Struktur</a></li>
             <li class="nav-item"><a class="nav-link" href="index.php#moment">Momen</a></li>
             <li class="nav-item"><a class="nav-link" href="index.php#contact">Kontak</a></li>
-            <li class="nav-item dropdown">
-              <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="languageDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                <img src="https://flagcdn.com/w20/id.png" class="me-1">
-              </a>
-              <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="languageDropdown">
-                <li><a class="dropdown-item d-flex align-items-center" href="#" onclick="changeLang('id'); return false;"><img src="https://flagcdn.com/w20/id.png" class="me-2"> Indonesia</a></li>
-                <li><a class="dropdown-item d-flex align-items-center" href="#" onclick="changeLang('en'); return false;"><img src="https://flagcdn.com/w20/us.png" class="me-2"> English</a></li>
-              </ul>
-            </li>
-            <div id="google_translate_element" style="display:none"></div>
           </ul>
         </nav>
       </div>
     </header>
 
+
   <!-- Main -->
   <main id="main">
-    <section class="container my-5">
-      <div class="row g-4" id="karir-container" style="margin-top: 30px;">
-
-        <?php while ($row = mysqli_fetch_assoc($result)) : ?>
-          <div class="col-md-6 col-lg-3 karir-item" data-aos="fade-up">
-            <div class="card shadow-sm border-0 h-100">
-              <img src="assets/img/karir/<?php echo $row['image']; ?>" class="card-img-top" alt="<?php echo $row['title']; ?>" />
-              <div class="card-body">
-                <h5 class="card-title"><?php echo $row['title']; ?></h5>
-                <p class="card-text">
-                  <?php echo substr(strip_tags($row['description']), 0, 80); ?>...
-                </p>
-                <small class="text-muted d-block mb-2"><?php echo $row['date_posted']; ?></small>
-                <a href="detail_karir.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm">Baca Selengkapnya</a>
-              </div>
-            </div>
-          </div>
-        <?php endwhile; ?>
-
+    <section class="container" style="padding-top: 150px; padding-bottom: 50px;">
+      <div class="section-header text-center mb-5">
+          <h2>Temukan Karir Impian Anda</h2>
+          <p>Bergabunglah dengan tim kami yang dinamis dan berdedikasi.</p>
       </div>
 
-      <nav aria-label="Karir page navigation">
-        <ul class="pagination justify-content-center mt-5" id="karir-pagination"></ul>
-      </nav>
+      <!-- Filter Section -->
+      <div class="mb-5 p-3 bg-light rounded">
+        <form action="karir.php" method="GET">
+          <div class="row g-2 align-items-end">
+            <div class="col-md-5">
+              <label for="search" class="form-label">Kata Kunci</label>
+              <input type="text" id="search" name="search" class="form-control" placeholder="Posisi, keahlian..." value="<?php echo htmlspecialchars($search_term); ?>">
+            </div>
+            <div class="col-md-2">
+              <label for="location" class="form-label">Lokasi</label>
+              <select id="location" name="location" class="form-select">
+                <option value="">Semua</option>
+                <?php while($loc = mysqli_fetch_assoc($locations)): ?>
+                  <option value="<?php echo htmlspecialchars($loc['location']); ?>" <?php echo ($location_filter == $loc['location']) ? 'selected' : ''; ?>><?php echo htmlspecialchars($loc['location']); ?></option>
+                <?php endwhile; ?>
+              </select>
+            </div>
+            <div class="col-md-2">
+              <label for="type" class="form-label">Tipe</label>
+              <select id="type" name="type" class="form-select">
+                <option value="">Semua</option>
+                <?php while($type = mysqli_fetch_assoc($job_types)): ?>
+                  <option value="<?php echo htmlspecialchars($type['job_type']); ?>" <?php echo ($type_filter == $type['job_type']) ? 'selected' : ''; ?>><?php echo htmlspecialchars($type['job_type']); ?></option>
+                <?php endwhile; ?>
+              </select>
+            </div>
+            <div class="col-md-3 d-flex">
+                <button type="submit" class="btn btn-primary w-100">Cari</button>
+                <a href="karir.php" class="btn btn-outline-secondary ms-2">Reset</a>
+            </div>
+          </div>
+        </form>
+      </div>
+
+      <!-- Karir List -->
+      <div id="karir-container">
+        <?php if(mysqli_num_rows($result) > 0): ?>
+          <?php while ($row = mysqli_fetch_assoc($result)) : ?>
+            <div class="list-group-item list-group-item-action mb-3 p-4 shadow-sm rounded-3">
+                <div class="d-flex w-100 justify-content-between">
+                    <h5 class="mb-1 fw-bold"><a href="detail_karir.php?id=<?php echo $row['id']; ?>" class="text-decoration-none text-dark"><?php echo htmlspecialchars($row['title']); ?></a></h5>
+                    <small class="text-muted">Posted: <?php echo date("d M Y", strtotime($row['date_posted'])); ?></small>
+                </div>
+                <p class="mb-1 text-muted">
+                    <i class="bi bi-geo-alt"></i> <?php echo htmlspecialchars($row['location']); ?> 
+                    <span class="mx-2">|</span>
+                    <i class="bi bi-briefcase"></i> <?php echo htmlspecialchars($row['job_type']); ?>
+                </p>
+                <a href="detail_karir.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-outline-primary mt-2">Lihat Detail</a>
+            </div>
+          <?php endwhile; ?>
+        <?php else: ?>
+            <div class="text-center mt-4">
+                <p>Maaf, tidak ada lowongan yang sesuai dengan kriteria Anda saat ini.</p>
+            </div>
+        <?php endif; ?>
+      </div>
+
     </section>
   </main>
 
+   <!-- Footer -->
   <?php
-      // Ambil data footer
       $footerQuery = "SELECT * FROM contact WHERE section='footer'";
       $footerResult = mysqli_query($conn, $footerQuery);
-
-      // Simpan di array biar gampang dipanggil
       $footerData = [];
       while ($row = mysqli_fetch_assoc($footerResult)) {
         $footerData[$row['type']] = $row['value'];
       }
     ?>
-
     <footer id="footer" class="footer bg-dark pt-5 pb-3" style="background-image: url('assets/img/bg3.png'); background-size: cover; background-position: center;">
       <div class="container">
         <div class="row gy-4 justify-content-center text-center">
-
-          <!-- Alamat -->
           <div class="col-md-4 d-flex flex-column align-items-center">
             <i class="bi bi-geo-alt fs-3 mb-2"></i>
-            <div>
-              <h5 class="fw-bold">Alamat</h5>
-              <p class="mb-0"><?php echo $footerData['Alamat']; ?></p>
-            </div>
+            <div><h5 class="fw-bold">Alamat</h5><p class="mb-0"><?php echo $footerData['Alamat']; ?></p></div>
           </div>
-
-          <!-- Hubungi -->
           <div class="col-md-4 d-flex flex-column align-items-center">
             <i class="bi bi-telephone fs-3 mb-2"></i>
-            <div>
-              <h5 class="fw-bold">Hubungi</h5>
-              <p class="mb-0">
-                <strong>Email:</strong> <br /><?php echo $footerData['Email']; ?> <br />
-                <strong>Whatsapp:</strong> <br /><a href="https://wa.me/<?php echo $footerData['Nomor']; ?>"><?php echo $footerData['Nomor']; ?></a>
-              </p>
-            </div>
+            <div><h5 class="fw-bold">Hubungi</h5><p class="mb-0"><strong>Email:</strong> <br /><?php echo $footerData['Email']; ?> <br /><strong>Whatsapp:</strong> <br /><a href="https://wa.me/<?php echo $footerData['Nomor']; ?>"><?php echo $footerData['Nomor']; ?></a></p></div>
           </div>
-
-          <!-- Tersedia -->
           <div class="col-md-4 d-flex flex-column align-items-center">
             <i class="bi bi-clock fs-3 mb-2"></i>
-            <div>
-              <h5 class="fw-bold">Tersedia</h5>
-              <p class="mb-0">
-                <strong>Senin - Jumat:</strong> <br /><?php echo $footerData['Waktu']; ?><br />
-                <strong>Sabtu - Minggu:</strong> <br />Tutup
-              </p>
-            </div>
+            <div><h5 class="fw-bold">Tersedia</h5><p class="mb-0"><strong>Senin - Jumat:</strong> <br /><?php echo $footerData['Waktu']; ?><br /><strong>Sabtu - Minggu:</strong> <br />Tutup</p></div>
           </div>
         </div>
-
         <hr class="border-secondary my-4" />
         <div class="text-center small">© Hak Cipta <strong>PT. INTAN SEJAHTERA UTAMA</strong>.</div>
       </div>
@@ -183,56 +186,8 @@ $result = mysqli_query($conn, "SELECT * FROM karir ORDER BY date_posted DESC");
   <script src="assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
   <script src="assets/vendor/aos/aos.js"></script>
   <script src="assets/vendor/glightbox/js/glightbox.min.js"></script>
-  <script src="assets/vendor/purecounter/purecounter_vanilla.js"></script>
   <script src="assets/vendor/swiper/swiper-bundle.min.js"></script>
   <script src="assets/js/main.js"></script>
 
-  <!-- Pagination script -->
-  <script>
-    document.addEventListener("DOMContentLoaded", function() {
-      const itemsPerPage = 8;
-      const karirItems = document.querySelectorAll('#karir-container .karir-item');
-      const totalPages = Math.ceil(karirItems.length / itemsPerPage);
-      const paginationContainer = document.getElementById('karir-pagination');
-
-      function showPage(pageNumber) {
-        const startIndex = (pageNumber - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-
-        karirItems.forEach(item => item.style.display = 'none');
-        for (let i = startIndex; i < endIndex; i++) {
-          if (karirItems[i]) {
-            karirItems[i].style.display = 'block';
-          }
-        }
-
-        document.querySelectorAll('.page-item').forEach(li => li.classList.remove('active'));
-        document.querySelector(`.page-item[data-page="${pageNumber}"]`).classList.add('active');
-      }
-
-      function setupPagination() {
-        for (let i = 1; i <= totalPages; i++) {
-          const pageItem = document.createElement('li');
-          pageItem.className = 'page-item';
-          pageItem.dataset.page = i;
-
-          const pageLink = document.createElement('a');
-          pageLink.className = 'page-link';
-          pageLink.href = '#';
-          pageLink.textContent = i;
-          pageItem.appendChild(pageLink);
-
-          pageLink.addEventListener('click', function(e) {
-            e.preventDefault();
-            showPage(i);
-          });
-
-          paginationContainer.appendChild(pageItem);
-        }
-        if (totalPages > 0) showPage(1);
-      }
-      setupPagination();
-    });
-  </script>
 </body>
 </html>

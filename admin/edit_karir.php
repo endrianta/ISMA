@@ -6,7 +6,7 @@ if (!isset($_SESSION['username'])) {
     exit();
 }
 
-// pastikan ada ID
+// Pastikan ada ID
 if (!isset($_GET['id'])) {
     header("Location: karir.php");
     exit();
@@ -14,7 +14,7 @@ if (!isset($_GET['id'])) {
 
 $id = intval($_GET['id']);
 
-// ambil data lama
+// Ambil data lama
 $result = mysqli_query($conn, "SELECT * FROM karir WHERE id=$id");
 $data = mysqli_fetch_assoc($result);
 
@@ -23,12 +23,16 @@ if (!$data) {
     exit();
 }
 
-// handle update
+// Handle update
 if (isset($_POST['update'])) {
-    $title       = mysqli_real_escape_string($conn, $_POST['title']);
-    $description = mysqli_real_escape_string($conn, $_POST['description']);
-    $date_posted = $_POST['date_posted'];
-    $image       = $data['image']; // default: gambar lama
+    $title        = mysqli_real_escape_string($conn, $_POST['title']);
+    $description  = mysqli_real_escape_string($conn, $_POST['description']);
+    $location     = mysqli_real_escape_string($conn, $_POST['location']);
+    $job_type     = mysqli_real_escape_string($conn, $_POST['job_type']);
+    $status       = mysqli_real_escape_string($conn, $_POST['status']);
+    $date_posted  = $_POST['date_posted'];
+    $closing_date = !empty($_POST['closing_date']) ? "'" . $_POST['closing_date'] . "'" : "NULL";
+    $image        = $data['image']; // default: gambar lama
 
     if (!empty($_FILES['image']['name'])) {
         $allowed_ext = ['jpg','jpeg','png','gif','webp'];
@@ -56,7 +60,11 @@ if (isset($_POST['update'])) {
     $sql = "UPDATE karir SET 
             title='$title',
             description='$description',
+            location='$location',
+            job_type='$job_type',
+            status='$status',
             date_posted='$date_posted',
+            closing_date=$closing_date,
             image='$image'
             WHERE id=$id";
 
@@ -64,7 +72,7 @@ if (isset($_POST['update'])) {
         header("Location: edit_karir.php?id=$id&success=1");
         exit();
     } else {
-        echo "<p style='color:red;text-align:center;'>Gagal update lowongan!</p>";
+        echo "<p style='color:red;text-align:center;'>Gagal update lowongan! Error: " . mysqli_error($conn) . "</p>";
     }
 }
 ?>
@@ -75,104 +83,23 @@ if (isset($_POST['update'])) {
   <meta charset="UTF-8">
   <title>Edit Lowongan Karir - PT. ISMA</title>
   <link rel="icon" type="image/png" href="../assets/img/pelindo2.png">
+  <link href="https://cdn.jsdelivr.net/npm/froala-editor@latest/css/froala_editor.pkgd.min.css" rel="stylesheet" type="text/css" />
 
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f4f6f9;
-      margin: 0;
-      padding: 0;
-    }
-
-    header {
-      background: #2c3e50;
-      color: white;
-      padding: 15px 30px;
-      text-align: center;
-    }
-
-    .container {
-      max-width: 900px;
-      margin: 40px auto;
-      background: white;
-      padding: 30px;
-      border-radius: 12px;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-    }
-
-    h2 {
-      margin-bottom: 25px;
-      color: #2c3e50;
-      text-align: center;
-    }
-
-    label {
-      font-weight: bold;
-      display: block;
-      margin-bottom: 8px;
-      margin-top: 15px;
-    }
-
-    input[type="text"], input[type="date"], textarea, input[type="file"] {
-      width: 100%;
-      padding: 10px;
-      border-radius: 6px;
-      border: 1px solid #ccc;
-      font-size: 15px;
-      box-sizing: border-box;
-    }
-
-    textarea {
-      height: 150px;
-      resize: vertical;
-    }
-
-    button {
-      margin-top: 20px;
-      background: #27ae60;
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      font-size: 16px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: 0.3s;
-      width: 100%;
-    }
-    button:hover {
-      background: #219150;
-    }
-
-    .back-link {
-      display: inline-block;
-      margin-top: 20px;
-      text-decoration: none;
-      color: #2980b9;
-    }
-    .back-link:hover {
-      text-decoration: underline;
-    }
-
-    .preview {
-      margin-top: 10px;
-      text-align: center;
-    }
-    .preview img {
-      margin-top: 8px;
-      max-width: 200px;
-      border:1px solid #ccc;
-      padding:5px;
-      border-radius:8px;
-    }
-    .alert-success {
-      background: #d4edda; 
-      color: #155724; 
-      border: 1px solid #c3e6cb; 
-      padding: 10px; 
-      margin-bottom: 15px; 
-      border-radius: 6px;
-      text-align:center;
-    }
+    body { font-family: Arial, sans-serif; background: #f4f6f9; margin: 0; padding: 0; }
+    header { background: #2c3e50; color: white; padding: 15px 30px; text-align: center; }
+    .container { max-width: 900px; margin: 40px auto; background: white; padding: 30px; border-radius: 12px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+    h2 { margin-bottom: 25px; color: #2c3e50; text-align: center; }
+    label { font-weight: bold; display: block; margin-bottom: 8px; margin-top: 15px; }
+    input[type="text"], input[type="date"], textarea, input[type="file"], select { width: 100%; padding: 10px; border-radius: 6px; border: 1px solid #ccc; font-size: 15px; box-sizing: border-box; }
+    .fr-box { margin-top: 10px; }
+    button { margin-top: 20px; background: #27ae60; color: white; border: none; padding: 12px 20px; font-size: 16px; border-radius: 8px; cursor: pointer; transition: 0.3s; width: 100%; }
+    button:hover { background: #219150; }
+    .back-link { display: inline-block; margin-top: 20px; text-decoration: none; color: #2980b9; }
+    .back-link:hover { text-decoration: underline; }
+    .preview { margin-top: 10px; text-align: center; }
+    .preview img { margin-top: 8px; max-width: 200px; border:1px solid #ccc; padding:5px; border-radius:8px; }
+    .alert-success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; padding: 10px; margin-bottom: 15px; border-radius: 6px; text-align:center; }
   </style>
 </head>
 <body>
@@ -194,8 +121,27 @@ if (isset($_POST['update'])) {
       <label>Deskripsi</label>
       <textarea name="description" required><?php echo htmlspecialchars($data['description']); ?></textarea>
 
+      <label>Lokasi</label>
+      <input type="text" name="location" placeholder="Contoh: Jakarta" value="<?php echo htmlspecialchars($data['location']); ?>" required>
+
+      <label>Tipe Pekerjaan</label>
+      <select name="job_type" required>
+        <option value="Penuh Waktu" <?php echo ($data['job_type'] == 'Penuh Waktu') ? 'selected' : ''; ?>>Penuh Waktu</option>
+        <option value="Magang" <?php echo ($data['job_type'] == 'Magang') ? 'selected' : ''; ?>>Magang</option>
+        <option value="Kontrak" <?php echo ($data['job_type'] == 'Kontrak') ? 'selected' : ''; ?>>Kontrak</option>
+      </select>
+
+      <label>Tanggal Penutupan Lamaran</label>
+      <input type="date" name="closing_date" value="<?php echo htmlspecialchars($data['closing_date']); ?>">
+
       <label>Tanggal Posting</label>
       <input type="date" name="date_posted" value="<?php echo htmlspecialchars($data['date_posted']); ?>" required>
+      
+      <label>Status Lowongan</label>
+      <select name="status" required>
+        <option value="Dibuka" <?php echo ($data['status'] == 'Dibuka') ? 'selected' : ''; ?>>Dibuka</option>
+        <option value="Ditutup" <?php echo ($data['status'] == 'Ditutup') ? 'selected' : ''; ?>>Ditutup</option>
+      </select>
 
       <div class="preview">
           <p>Gambar Saat Ini:</p>
@@ -214,5 +160,13 @@ if (isset($_POST['update'])) {
 
     <a href="karir.php" class="back-link">← Kembali ke Daftar Lowongan</a>
   </div>
+
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/froala-editor@latest/js/froala_editor.pkgd.min.js"></script>
+  <script>
+    new FroalaEditor('textarea[name="description"]', {
+      imageUploadURL: 'upload_image_karir.php',
+      imageAllowedTypes: ['jpeg', 'jpg', 'png', 'gif', 'webp']
+    });
+  </script>
 </body>
 </html>
