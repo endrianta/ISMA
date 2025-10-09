@@ -110,6 +110,11 @@ $pembelajaran_counts = mysqli_fetch_assoc($pembelajaran_query);
         <h3>Total Sertifikat</h3>
         <p><?= mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM sertifikat"))['total']; ?></p>
       </div>
+      <div class="card">
+        <h3>Total Pelamar</h3>
+        <p><?= mysqli_fetch_assoc(mysqli_query($conn, "SELECT COUNT(*) as total FROM applicants"))['total']; ?></p>
+      </div>
+      
       
       <!-- Materi Pembelajaran (SPLIT CARD) -->
       <div class="card split">

@@ -25,10 +25,62 @@ if (substr($wa_number_clean, 0, 1) === '0') {
     $wa_link_number = $wa_number_clean;
 }
 
-
 // Handle form submission for new application
 if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['submit_application'])) {
-    // ... (kode submit lamaran tidak berubah, sama seperti sebelumnya) ...
+    $karir_id = $id;
+    $name = mysqli_real_escape_string($conn, $_POST['name']);
+    $email = mysqli_real_escape_string($conn, $_POST['email']);
+    $phone = mysqli_real_escape_string($conn, $_POST['phone']);
+
+    // Validasi email
+    $check_email_sql = "SELECT id FROM applicants WHERE karir_id = ? AND email = ?";
+    $stmt_check = mysqli_prepare($conn, $check_email_sql);
+    mysqli_stmt_bind_param($stmt_check, "is", $karir_id, $email);
+    mysqli_stmt_execute($stmt_check);
+    mysqli_stmt_store_result($stmt_check);
+
+    if (mysqli_stmt_num_rows($stmt_check) > 0) {
+        $message = '<div class="alert alert-danger">Anda sudah pernah melamar untuk posisi ini dengan email yang sama.</div>';
+    } else {
+        // File upload handling
+        $cv_filename = '';
+        if (isset($_FILES['cv']) && $_FILES['cv']['error'] == 0) {
+            $allowed_extensions = ['pdf', 'doc', 'docx'];
+            $file_extension = strtolower(pathinfo($_FILES['cv']['name'], PATHINFO_EXTENSION));
+            
+            if ($_FILES['cv']['size'] > 5 * 1024 * 1024) { // 5MB
+                $message = '<div class="alert alert-danger">Ukuran file CV tidak boleh lebih dari 5MB.</div>';
+            } elseif (!in_array($file_extension, $allowed_extensions)) {
+                $message = '<div class="alert alert-danger">Format file CV harus PDF, DOC, atau DOCX.</div>';
+            } else {
+                $upload_dir = 'admin/uploads/cv/';
+                if (!is_dir($upload_dir)) {
+                    mkdir($upload_dir, 0777, true);
+                }
+                $cv_filename = uniqid() . '_' . basename($_FILES['cv']['name']);
+                $upload_path = $upload_dir . $cv_filename;
+
+                if (move_uploaded_file($_FILES['cv']['tmp_name'], $upload_path)) {
+                    // Simpan ke database
+                    $insert_sql = "INSERT INTO applicants (karir_id, name, email, phone, cv_path, status) VALUES (?, ?, ?, ?, ?, 'Pending')";
+                    $stmt_insert = mysqli_prepare($conn, $insert_sql);
+                    mysqli_stmt_bind_param($stmt_insert, "issss", $karir_id, $name, $email, $phone, $cv_filename);
+                    
+                    if (mysqli_stmt_execute($stmt_insert)) {
+                        $message = '<div class="alert alert-success">Lamaran Anda berhasil dikirim! Silakan cek status lamaran Anda secara berkala.</div>';
+                    } else {
+                        $message = '<div class="alert alert-danger">Gagal menyimpan data lamaran. Silakan coba lagi.</div>';
+                    }
+                    mysqli_stmt_close($stmt_insert);
+                } else {
+                    $message = '<div class="alert alert-danger">Gagal meng-upload file CV.</div>';
+                }
+            }
+        } else {
+            $message = '<div class="alert alert-danger">File CV wajib diisi.</div>';
+        }
+    }
+    mysqli_stmt_close($stmt_check);
 }
 
 // Handle status check
